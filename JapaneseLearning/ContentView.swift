@@ -17,10 +17,9 @@ struct ContentView: View {
             }
         }
         .sheet(isPresented: $showScanner) {
-            // ✅ FIX: Provide the required closure
             ScannerView { scannedResult in
                 scannedText = scannedResult
-                showScanner = false // Close the sheet after scanning
+                showScanner = false
             }
         }
     }

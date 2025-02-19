@@ -1,21 +1,28 @@
-//
-//  ContentView.swift
-//  JapaneseLearning
-//
-//  Created by Jargalsaikhan Amgalan on 2025/02/20.
-//
-
 import SwiftUI
 
 struct ContentView: View {
+    @State private var showScanner = false
+    @State private var scannedText: [String] = []
+
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Button("Scan Text") {
+                showScanner = true
+            }
+            .padding()
+            .buttonStyle(.borderedProminent)
+
+            List(scannedText, id: \.self) { text in
+                Text(text)
+            }
         }
-        .padding()
+        .sheet(isPresented: $showScanner) {
+            // ✅ FIX: Provide the required closure
+            ScannerView { scannedResult in
+                scannedText = scannedResult
+                showScanner = false // Close the sheet after scanning
+            }
+        }
     }
 }
 
